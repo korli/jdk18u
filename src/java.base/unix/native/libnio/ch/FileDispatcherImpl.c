@@ -40,7 +40,7 @@
 #include <sys/ioctl.h>
 #endif
 
-#if defined(_ALLBSD_SOURCE)
+#if defined(_ALLBSD_SOURCE) || defined(HAIKU)
 #define lseek64 lseek
 #define stat64 stat
 #define flock64 flock
@@ -354,7 +354,7 @@ Java_sun_nio_ch_FileDispatcherImpl_setDirect0(JNIEnv *env, jclass clazz,
 {
     jint fd = fdval(env, fdo);
     jint result;
-#ifdef MACOSX
+#if defined(MACOSX) || defined(HAIKU)
     struct statvfs file_stat;
 #else
     struct statvfs64 file_stat;
@@ -386,7 +386,7 @@ Java_sun_nio_ch_FileDispatcherImpl_setDirect0(JNIEnv *env, jclass clazz,
         return result;
     }
 #endif
-#ifdef MACOSX
+#if defined(MACOSX) || defined(HAIKU)
     result = fstatvfs(fd, &file_stat);
 #else
     result = fstatvfs64(fd, &file_stat);

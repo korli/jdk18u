@@ -36,6 +36,7 @@ public record Platform(OperatingSystem os, Architecture arch) {
         LINUX,
         MACOS,
         AIX,
+        HAIKU,
         UNKNOWN;
     }
 
@@ -106,6 +107,7 @@ public record Platform(OperatingSystem os, Architecture arch) {
             case "lin" -> OperatingSystem.LINUX;
             case "mac" -> OperatingSystem.MACOS;
             case "aix" -> OperatingSystem.AIX;
+            case "hai" -> OperatingSystem.HAIKU;
             default    -> OperatingSystem.UNKNOWN;
         };
         return os;

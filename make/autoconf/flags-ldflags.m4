@@ -173,7 +173,11 @@ AC_DEFUN([FLAGS_SETUP_LDFLAGS_CPU_DEP],
        test "x${OPENJDK_$1_CPU}" = xmips64el; then
       $1_CPU_LDFLAGS="${$1_CPU_LDFLAGS} -Wl,--hash-style=sysv"
     else
-      $1_CPU_LDFLAGS="${$1_CPU_LDFLAGS} -Wl,--hash-style=gnu"
+       if test "x$OPENJDK_TARGET_OS" = xhaiku; then
+         $1_CPU_LDFLAGS="${$1_CPU_LDFLAGS} -Wl,--hash-style=both"
+       else
+         $1_CPU_LDFLAGS="${$1_CPU_LDFLAGS} -Wl,--hash-style=gnu"
+       fi
     fi
 
   elif test "x$TOOLCHAIN_TYPE" = xmicrosoft; then

@@ -73,7 +73,9 @@ static signalDefinition signals[] =
     {SIGQUIT, "SIGQUIT"},
     {SIGILL, "SIGILL"},
     {SIGTRAP, "SIGTRAP"},
+#ifdef SIGIOT
     {SIGIOT, "SIGIOT"},
+#endif
 #ifdef SIGEMT
     {SIGEMT, "SIGEMT"},
 #endif

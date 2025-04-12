@@ -64,7 +64,7 @@ EXCLUDE_FILES += \
     .template \
     #
 
-ifeq ($(call isTargetOs, macosx), true)
+ifeq ($(call isTargetOs, macosx haiku), true)
   # exclude all X11 on Mac.
   EXCLUDES += \
       sun/awt/X11 \

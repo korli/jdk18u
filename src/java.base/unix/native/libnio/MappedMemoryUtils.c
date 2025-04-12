@@ -58,6 +58,9 @@ JNIEXPORT jboolean JNICALL
 Java_java_nio_MappedMemoryUtils_isLoaded0(JNIEnv *env, jobject obj, jlong address,
                                          jlong len, jlong numPages)
 {
+#ifdef HAIKU
+    return JNI_FALSE;
+#else
     jboolean loaded = JNI_TRUE;
     int result = 0;
     long i = 0;
@@ -100,6 +103,7 @@ Java_java_nio_MappedMemoryUtils_isLoaded0(JNIEnv *env, jobject obj, jlong addres
     }
     free(vec);
     return loaded;
+#endif      
 }
 
 

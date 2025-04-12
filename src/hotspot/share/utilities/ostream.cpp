@@ -1065,7 +1065,7 @@ bufferedStream::~bufferedStream() {
 
 #ifndef PRODUCT
 
-#if defined(LINUX) || defined(AIX) || defined(_ALLBSD_SOURCE)
+#if defined(LINUX) || defined(AIX) || defined(_ALLBSD_SOURCE) || defined(HAIKU)
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>

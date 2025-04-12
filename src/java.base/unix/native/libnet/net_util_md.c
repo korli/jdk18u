@@ -51,6 +51,10 @@
 #define IPV6_FLOWINFO_SEND      33
 #endif
 
+#ifdef HAIKU
+#define DONT_ENABLE_IPV6 1
+#endif
+
 #define RESTARTABLE(_cmd, _result) do { \
     do { \
         _result = _cmd; \

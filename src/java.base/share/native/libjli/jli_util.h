@@ -110,6 +110,9 @@ JLI_CmdToArgs(char *cmdline);
 #ifdef _AIX
 #define JLI_Lseek                       lseek
 #endif
+#ifdef HAIKU
+#define JLI_Lseek                       lseek
+#endif
 #endif /* _WIN32 */
 
 /*

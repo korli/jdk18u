@@ -151,6 +151,19 @@ class oopDesc;
 #define INTX_FORMAT_W(width)  "%" #width PRIdPTR
 #define UINTX_FORMAT_W(width) "%" #width PRIuPTR
 
+#ifdef HAIKU
+#include <SupportDefs.h>
+#define OSTHREADID_FORMAT     "%" B_PRIx32
+#define OSTHREADID_FORMAT2    "%2" B_PRId32
+#define OSTHREADID_FORMAT_HEX "%" B_PRIx32
+#define OSTHREADID_FORMAT_HEX2 "%2" B_PRIx32
+#else
+#define OSTHREADID_FORMAT     "%ld"
+#define OSTHREADID_FORMAT2    "%2ld"
+#define OSTHREADID_FORMAT_HEX "%lx"
+#define OSTHREADID_FORMAT_HEX2 "%2lx"
+#endif
+
 // Convert pointer to intptr_t, for use in printing pointers.
 inline intptr_t p2i(const volatile void* p) {
   return (intptr_t) p;

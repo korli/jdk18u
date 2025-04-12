@@ -34,7 +34,7 @@
 #elif defined(_AIX)
 #include <string.h>
 #include <sys/socket.h>
-#elif defined(_ALLBSD_SOURCE)
+#elif defined(_ALLBSD_SOURCE) || defined(HAIKU)
 #include <sys/socket.h>
 #include <sys/uio.h>
 #define lseek64 lseek

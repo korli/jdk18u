@@ -66,7 +66,7 @@ FD getFD(JNIEnv *env, jobject cur, jfieldID fid);
 #define IO_SetLength handleSetLength
 #define IO_GetLength handleGetLength
 
-#ifdef _ALLBSD_SOURCE
+#if defined(_ALLBSD_SOURCE) || defined(HAIKU)
 #define open64 open
 #define fstat64 fstat
 #define stat64 stat

@@ -33,6 +33,7 @@ public class OSUtils {
 
     public static final boolean IS_OSX = System.getProperty("os.name").toLowerCase().contains("mac");
     public static final boolean IS_AIX = System.getProperty("os.name").equals("AIX");
+    public static final boolean IS_HAIKU = System.getProperty("os.name").toLowerCase().equals("haiku");
 
     public static String TTY_COMMAND;
     public static String STTY_COMMAND;

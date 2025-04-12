@@ -28,7 +28,7 @@
 #include "memory/allocation.hpp"
 #include "utilities/globalDefinitions.hpp"
 
-#if defined(LINUX) || defined(AIX)
+#if defined(LINUX) || defined(AIX) || defined(HAIKU)
 # include "semaphore_posix.hpp"
 #elif defined(BSD)
 # include "semaphore_bsd.hpp"

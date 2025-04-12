@@ -71,12 +71,32 @@ ifeq ($(call isTargetOs, aix), false)
       LIBS_macosx := -framework CoreAudio -framework CoreFoundation \
           -framework CoreServices -framework AudioUnit \
           -framework CoreMIDI -framework AudioToolbox $(LIBCXX), \
+      LIBS_haiku := -lmedia -lmidi2 -lbe -lstdc++, \
       LIBS_windows := $(WIN_JAVA_LIB) advapi32.lib dsound.lib winmm.lib user32.lib ole32.lib, \
   ))
 
   $(BUILD_LIBJSOUND): $(call FindLib, java.base, java)
 
   TARGETS += $(BUILD_LIBJSOUND)
+
+endif
+
+################################################################################
+# Create the haiku specific app
+
+ifeq ($(call isTargetOs, haiku), true)
+
+  $(eval $(call SetupJdkLibrary,BUILD_LIBHAIKUAPP, \
+      NAME := haikuapp, \
+      LANG := C++, \
+      OPTIMIZATION := LOW, \
+      CFLAGS := -w $(CFLAGS_JDKLIB), \
+      LDFLAGS := $(LDFLAGS_JDKLIB) \
+          $(call SET_SHARED_LIBRARY_ORIGIN), \
+      LIBS := -lbe -lstdc++, \
+  ))
+
+  TARGETS += $(BUILD_LIBHAIKUAPP)
 
 endif
 

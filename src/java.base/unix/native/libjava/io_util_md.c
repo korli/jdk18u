@@ -30,7 +30,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#if defined(__linux__) || defined(_ALLBSD_SOURCE) || defined(_AIX)
+#if defined(__linux__) || defined(_ALLBSD_SOURCE) || defined(_AIX) || defined(HAIKU)
 #include <sys/ioctl.h>
 #endif
 

@@ -57,7 +57,7 @@
 #include <string.h>
 #endif
 
-#ifdef _ALLBSD_SOURCE
+#if defined(_ALLBSD_SOURCE) || defined(__HAIKU__)
 #include <string.h>
 
 #define stat64 stat

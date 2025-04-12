@@ -30,7 +30,7 @@
 #include "nio_util.h"
 #include "sun_nio_ch_FileKey.h"
 
-#ifdef _ALLBSD_SOURCE
+#if defined(_ALLBSD_SOURCE) || defined(HAIKU)
 #define stat64 stat
 
 #define fstat64 fstat

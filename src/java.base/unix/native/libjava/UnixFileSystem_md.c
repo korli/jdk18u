@@ -63,7 +63,7 @@
   #define stat stat64
 #endif
 
-#if defined(_ALLBSD_SOURCE)
+#if defined(_ALLBSD_SOURCE) || defined(HAIKU)
   #ifndef MACOSX
     #define statvfs64 statvfs
     #define stat64 stat

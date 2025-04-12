@@ -59,7 +59,7 @@
 /**
  * IPV6_ADD_MEMBERSHIP/IPV6_DROP_MEMBERSHIP may not be defined on OSX and AIX
  */
-#if defined(__APPLE__) || defined(_AIX)
+#if defined(__APPLE__) || defined(_AIX)|| defined(__HAIKU__)
   #ifndef IPV6_ADD_MEMBERSHIP
     #define IPV6_ADD_MEMBERSHIP     IPV6_JOIN_GROUP
     #define IPV6_DROP_MEMBERSHIP    IPV6_LEAVE_GROUP

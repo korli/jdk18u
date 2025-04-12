@@ -171,7 +171,11 @@ static get_signal_t get_signal_action = NULL;
 
 // Signal number used to suspend/resume a thread
 // do not use any signal number less than SIGSEGV, see 4355769
+#ifdef HAIKU
+int PosixSignals::SR_signum = SIGRESERVED2;
+#else
 int PosixSignals::SR_signum = SIGUSR2;
+#endif
 
 // sun.misc.Signal support
 static Semaphore* sig_semaphore = NULL;
@@ -552,6 +556,8 @@ public:
 #define JVM_HANDLE_XXX_SIGNAL JVM_handle_aix_signal
 #elif defined(LINUX)
 #define JVM_HANDLE_XXX_SIGNAL JVM_handle_linux_signal
+#elif defined(HAIKU)
+#define JVM_HANDLE_XXX_SIGNAL JVM_handle_haiku_signal
 #else
 #error who are you?
 #endif

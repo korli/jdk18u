@@ -45,6 +45,8 @@ public final class FontUtilities {
     public static boolean isMacOSX;
     public static boolean isMacOSX14;
 
+    public static boolean isHaiku;
+
     public static boolean useJDKScaler;
 
     public static boolean isWindows;
@@ -67,6 +69,8 @@ public final class FontUtilities {
                 String osName = System.getProperty("os.name", "unknownOS");
 
                 isLinux = osName.startsWith("Linux");
+
+                isHaiku = osName.startsWith("Haiku");
 
                 isMacOSX = osName.contains("OS X"); // TODO: MacOSX
                 if (isMacOSX) {

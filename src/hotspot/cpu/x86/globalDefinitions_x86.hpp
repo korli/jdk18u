@@ -65,7 +65,7 @@ const bool CCallingConventionRequiresIntsAsLongs = false;
 #define INCLUDE_RTM_OPT 1
 #endif
 
-#if defined(LINUX) || defined(__APPLE__)
+#if defined(LINUX) || defined(__APPLE__) | defined(HAIKU)
 #define SUPPORT_RESERVED_STACK_AREA
 #endif
 
