@@ -267,6 +267,8 @@ class Events : AllStatic {
 
   static void log_deopt_message(Thread* thread, const char* format, ...) ATTRIBUTE_PRINTF(2, 3);
 
+  static void log_dll_message(Thread* thread, const char* format, ...) ATTRIBUTE_PRINTF(2, 3);
+
   // Register default loggers
   static void init();
 };

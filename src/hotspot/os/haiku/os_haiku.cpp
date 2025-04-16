@@ -98,6 +98,8 @@
 # include <stdint.h>
 # include <inttypes.h>
 # include <sys/ioctl.h>
+//# include <dirent.h>
+//# include <stdarg.h>
 
 #include <kernel/image.h>
 #include <kernel/OS.h>
@@ -1441,10 +1443,10 @@ void os::set_native_thread_name(const char *name) {
   return;
 }
 
-bool os::bind_to_processor(uint processor_id) {
-  // Not yet implemented.
-  return false;
-}
+//bool os::bind_to_processor(uint processor_id) {
+//  // Not yet implemented.
+//  return false;
+//}
 
 ////////////////////////////////////////////////////////////////////////////////
 // debug support
@@ -1832,5 +1834,30 @@ bool os::start_debugging(char *buf, int buflen) {
   return yes;
 }
 
-void os::print_memory_mappings(char* addr, size_t bytes, outputStream* st) {}
+// Check if a directory is empty
+bool os::dir_is_empty(const char* path) {
+  DIR* dir = opendir(path);
+  if (dir == nullptr) {
+    return false; // Assume non-empty or error
+  }
+  struct dirent* entry;
+  while ((entry = readdir(dir)) != nullptr) {
+    if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0) {
+      closedir(dir);
+      return false; // Found a non-dot entry
+    }
+  }
+  closedir(dir);
+  return true; // Directory is empty
+}
 
+// Stub for event logging
+//void Events::log_dll_message(Thread* thread, const char* format, ...) {
+//  va_list ap;
+//  va_start(ap, format);
+//  vfprintf(stderr, format, ap);
+//  va_end(ap);
+//  fprintf(stderr, "\n");
+//}
+
+void os::print_memory_mappings(char* addr, size_t bytes, outputStream* st) {}
