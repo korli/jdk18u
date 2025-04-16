@@ -38,6 +38,7 @@
 #include "runtime/interfaceSupport.inline.hpp"
 #include "runtime/sharedRuntime.hpp"
 #include "services/attachListener.hpp"
+#include "utilities/defaultStream.hpp"
 #include "services/memTracker.hpp"
 #include "runtime/arguments.hpp"
 #include "runtime/atomic.hpp"
@@ -1999,6 +2000,25 @@ int os::fork_and_exec(const char* cmd) {
     // Don't log, we are inside error handling
     return -1;
   }
+}
+
+bool os::message_box(const char* title, const char* message) {
+  int i;
+  fdStream err(defaultStream::error_fd());
+  for (i = 0; i < 78; i++) err.print_raw("=");
+  err.cr();
+  err.print_raw_cr(title);
+  for (i = 0; i < 78; i++) err.print_raw("-");
+  err.cr();
+  err.print_raw_cr(message);
+  for (i = 0; i < 78; i++) err.print_raw("=");
+  err.cr();
+
+  char buf[16];
+  // Prevent process from exiting upon "read error" without consuming all CPU
+  while (::read(0, buf, sizeof(buf)) <= 0) { ::sleep(100); }
+
+  return buf[0] == 'y' || buf[0] == 'Y';
 }
 
 ////////////////////////////////////////////////////////////////////////////////
