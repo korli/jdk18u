@@ -1499,6 +1499,8 @@ bool os::getTimesSecs(double* process_real_time,
   }
 }
 
+#ifdef __HAIKU__
+
 char * os::local_time_string(char *buf, size_t buflen) {
   struct tm t;
   time_t long_time;
@@ -1514,6 +1516,7 @@ struct tm* os::localtime_pd(const time_t* clock, struct tm*  res) {
   return localtime_r(clock, res);
 }
 
+#endif
 
 // Shared pthread_mutex/cond based PlatformEvent implementation.
 // Not currently usable by Solaris.
