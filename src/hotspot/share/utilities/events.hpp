@@ -339,6 +339,15 @@ inline void Events::log_deopt_message(Thread* thread, const char* format, ...) {
   }
 }
 
+inline void Events::log_dll_message(Thread* thread, const char* format, ...) {
+  if (LogEvents && _dll_messages != NULL) {
+    va_list ap;
+    va_start(ap, format);
+    _dll_messages->logv(thread, format, ap);
+    va_end(ap);
+  }
+}
+
 template <class T>
 inline void EventLogBase<T>::print_log_on(outputStream* out, int max) {
   struct MaybeLocker {

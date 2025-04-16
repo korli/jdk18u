@@ -1851,13 +1851,4 @@ bool os::dir_is_empty(const char* path) {
   return true; // Directory is empty
 }
 
-// Stub for event logging
-//void Events::log_dll_message(Thread* thread, const char* format, ...) {
-//  va_list ap;
-//  va_start(ap, format);
-//  vfprintf(stderr, format, ap);
-//  va_end(ap);
-//  fprintf(stderr, "\n");
-//}
-
 void os::print_memory_mappings(char* addr, size_t bytes, outputStream* st) {}
