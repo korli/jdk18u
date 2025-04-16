@@ -186,10 +186,14 @@ size_t os::lasterror(char *buf, size_t len) {
 }
 
 // Return true if user is running as root.
+#ifndef __HAIKU__
+
 bool os::have_special_privileges() {
   static bool privileges = (getuid() != geteuid()) || (getgid() != getegid());
   return privileges;
 }
+
+#endif
 
 void os::wait_for_keypress_at_exit(void) {
   // don't do anything on posix platforms
@@ -1464,6 +1468,8 @@ void os::javaTimeNanos_info(jvmtiTimerInfo *info_ptr) {
 }
 #endif // ! APPLE && !AIX
 
+#ifndef __HAIKU__
+
 // Time since start-up in seconds to a fine granularity.
 double os::elapsedTime() {
   return ((double)os::elapsed_counter()) / os::elapsed_frequency(); // nanosecond resolution
@@ -1498,8 +1504,6 @@ bool os::getTimesSecs(double* process_real_time,
     return true;
   }
 }
-
-#ifdef __HAIKU__
 
 char * os::local_time_string(char *buf, size_t buflen) {
   struct tm t;
