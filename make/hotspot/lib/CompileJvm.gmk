@@ -125,6 +125,11 @@ else ifeq ($(call isTargetCpu, x86_64), true)
   JVM_EXCLUDE_PATTERNS += x86_32
 endif
 
+# Exclude os_posix.cpp for Haiku
+ifeq ($(OPENJDK_TARGET_OS), haiku)
+  JVM_EXCLUDE_FILES += os_posix.cpp
+endif
+
 JVM_OPTIMIZATION ?= HIGHEST_JVM
 
 # Need to set JVM_STRIPFLAGS to the default value from SPEC since the STRIPFLAGS
