@@ -129,10 +129,6 @@ else
 
 endif
 
-ifeq ($(call isTargetOs, macosx haiku), true)
-EXCLUDE_FILES += sun/awt/X11FontManager.java
-endif
-
 ifeq ($(call isTargetOs, windows), true)
   EXCLUDES += com/sun/java/swing/plaf/gtk
 endif
