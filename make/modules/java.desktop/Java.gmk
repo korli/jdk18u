@@ -64,6 +64,8 @@ EXCLUDE_FILES += \
     .template \
     #
 
+
+
 ifeq ($(call isTargetOs, macosx haiku), true)
   # exclude all X11 on Mac.
   EXCLUDES += \
@@ -124,6 +126,11 @@ else
       sun/awt/X11/XdbeSwapInfo.java \
       sun/awt/X11/XmbTextItem.java \
       sun/awt/X11/XwcTextItem.java
+
+endif
+
+ifeq ($(call isTargetOs, macosx haiku), true)
+EXCLUDE_FILES += sun/awt/X11FontManager.java
 endif
 
 ifeq ($(call isTargetOs, windows), true)

@@ -73,6 +73,12 @@ public class NativeFont extends PhysicalFont {
         return null;
     }
 
+    // FIXME: I cannot exclude properly X11FontManager.java
+    // under the gmk build files so this is a placeholder function.
+    public static boolean fontExists(String xlfd) {
+        return false;
+    }
+
     public GeneralPath getGlyphOutline(long pScalerContext,
                                        int glyphCode,
                                        float x, float y) {
