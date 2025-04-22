@@ -1,10 +1,12 @@
 /*
- * Copyright (c) 2003, 2010, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2021, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation.
+ * published by the Free Software Foundation.  Oracle designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Oracle in the LICENSE file that accompanied this code.
  *
  * This code is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
@@ -19,29 +21,19 @@
  * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
  * or visit www.oracle.com if you need additional information or have any
  * questions.
- *
  */
 
-#ifndef OS_CPU_HAIKU_X86_PREFETCH_HAIKU_X86_INLINE_HPP
-#define OS_CPU_HAIKU_X86_PREFETCH_HAIKU_X86_INLINE_HPP
+package sun.font;
 
-#include "runtime/prefetch.hpp"
+import sun.hawt.HaikuFontManager;
 
+final class PlatformFontInfo {
 
-inline void Prefetch::read (const void *loc, intx interval) {
-#ifdef AMD64
-  __asm__ ("prefetcht0 (%0,%1,1)" : : "r" (loc), "r" (interval));
-#endif // AMD64
+    /**
+     * The method is only to be called via the
+     * {@code FontManagerFactory.getInstance()} factory method.
+     */
+    static FontManager createFontManager() {
+        return new HaikuFontManager();
+    }
 }
-
-inline void Prefetch::write(void *loc, intx interval) {
-#ifdef AMD64
-
-  // Do not use the 3dnow prefetchw instruction.  It isn't supported on em64t.
-  //  __asm__ ("prefetchw (%0,%1,1)" : : "r" (loc), "r" (interval));
-  __asm__ ("prefetcht0 (%0,%1,1)" : : "r" (loc), "r" (interval));
-
-#endif // AMD64
-}
-
-#endif // OS_CPU_HAIKU_X86_PREFETCH_HAIKU_X86_INLINE_HPP

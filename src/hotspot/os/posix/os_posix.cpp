@@ -38,6 +38,7 @@
 #include "runtime/interfaceSupport.inline.hpp"
 #include "runtime/sharedRuntime.hpp"
 #include "services/attachListener.hpp"
+#include "utilities/defaultStream.hpp"
 #include "services/memTracker.hpp"
 #include "runtime/arguments.hpp"
 #include "runtime/atomic.hpp"
@@ -185,10 +186,14 @@ size_t os::lasterror(char *buf, size_t len) {
 }
 
 // Return true if user is running as root.
+#ifndef __HAIKU__
+
 bool os::have_special_privileges() {
   static bool privileges = (getuid() != geteuid()) || (getgid() != getegid());
   return privileges;
 }
+
+#endif
 
 void os::wait_for_keypress_at_exit(void) {
   // don't do anything on posix platforms
@@ -660,7 +665,7 @@ void os::dll_unload(void *lib) {
 }
 
 jlong os::lseek(int fd, jlong offset, int whence) {
-  return (jlong) BSD_ONLY(::lseek) NOT_BSD(::lseek64)(fd, offset, whence);
+  return (jlong) BSD_ONLY(::lseek) NOT_BSD(HAIKU_ONLY(::lseek) NOT_HAIKU(::lseek64))(fd, offset, whence);
 }
 
 int os::fsync(int fd) {
@@ -668,7 +673,7 @@ int os::fsync(int fd) {
 }
 
 int os::ftruncate(int fd, jlong length) {
-   return BSD_ONLY(::ftruncate) NOT_BSD(::ftruncate64)(fd, length);
+  return BSD_ONLY(::ftruncate) NOT_BSD(HAIKU_ONLY(::ftruncate) NOT_HAIKU(::ftruncate64))(fd, length);
 }
 
 const char* os::get_current_directory(char *buf, size_t buflen) {
@@ -797,6 +802,12 @@ char* os::build_agent_function_name(const char *sym_name, const char *lib_name,
   return agent_entry_name;
 }
 
+// Sleep forever; naked call to OS-specific sleep; use with CAUTION
+void os::infinite_sleep() {
+  while (true) {    // sleep forever ...
+    ::sleep(100);   // ... 100 seconds at a time
+  }
+}
 
 void os::naked_short_nanosleep(jlong ns) {
   struct timespec req;
@@ -1457,6 +1468,8 @@ void os::javaTimeNanos_info(jvmtiTimerInfo *info_ptr) {
 }
 #endif // ! APPLE && !AIX
 
+#ifndef __HAIKU__
+
 // Time since start-up in seconds to a fine granularity.
 double os::elapsedTime() {
   return ((double)os::elapsed_counter()) / os::elapsed_frequency(); // nanosecond resolution
@@ -1507,6 +1520,7 @@ struct tm* os::localtime_pd(const time_t* clock, struct tm*  res) {
   return localtime_r(clock, res);
 }
 
+#endif
 
 // Shared pthread_mutex/cond based PlatformEvent implementation.
 // Not currently usable by Solaris.
@@ -1993,6 +2007,25 @@ int os::fork_and_exec(const char* cmd) {
     // Don't log, we are inside error handling
     return -1;
   }
+}
+
+bool os::message_box(const char* title, const char* message) {
+  int i;
+  fdStream err(defaultStream::error_fd());
+  for (i = 0; i < 78; i++) err.print_raw("=");
+  err.cr();
+  err.print_raw_cr(title);
+  for (i = 0; i < 78; i++) err.print_raw("-");
+  err.cr();
+  err.print_raw_cr(message);
+  for (i = 0; i < 78; i++) err.print_raw("=");
+  err.cr();
+
+  char buf[16];
+  // Prevent process from exiting upon "read error" without consuming all CPU
+  while (::read(0, buf, sizeof(buf)) <= 0) { ::sleep(100); }
+
+  return buf[0] == 'y' || buf[0] == 'Y';
 }
 
 ////////////////////////////////////////////////////////////////////////////////

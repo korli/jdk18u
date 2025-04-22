@@ -27,6 +27,13 @@
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#ifdef __HAIKU__
+    #ifndef howmany
+    #define	howmany(x, y)	(((x)+((y)-1))/(y))
+    #endif
+#endif
+
 #include <sys/param.h>
 #include <signal.h>
 #include <pthread.h>

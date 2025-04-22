@@ -493,7 +493,8 @@ else ifeq ($(call isTargetOs, macosx haiku), true)
   LIBFONTMANAGER_EXCLUDE_FILES += X11FontScaler.c \
       X11TextRenderer.c \
       fontpath.c \
-      lcdglyph.c
+      lcdglyph.c \
+
 else
   LIBFONTMANAGER_EXCLUDE_FILES += fontpath.c \
       lcdglyph.c

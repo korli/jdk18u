@@ -134,7 +134,7 @@ AWT_OnLoad(JavaVM *vm, void *reserved)
 #ifdef MACOSX
         tk = LWAWT_PATH;
 #elif defined(HAIKU)
-        fmanager = (*env)->NewStringUTF(env, "sun.hawt.HaikuFontManager");
+//        fmanager = (*env)->NewStringUTF(env, "sun.hawt.HaikuFontManager");
         tk = LWAWT_PATH;
 #else
         tk = XAWT_PATH;
